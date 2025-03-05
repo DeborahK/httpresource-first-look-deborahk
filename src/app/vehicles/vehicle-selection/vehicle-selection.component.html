@@ -1,0 +1,51 @@
+<div class="container">
+   <div class="page-title">
+      {{pageTitle}}
+   </div>
+
+   @if (isLoading()) {
+   <div>... loading vehicles</div>
+   } @else if (errorMessage()){
+   <div style='color: red'>An error occurred: {{ errorMessage() }}</div>
+   } @else {
+      <div>
+         <select [(ngModel)]="selectedModel">
+            <option value=""
+                    selected>--Select a vehicle model--</option>
+            @for(model of vehicleModels(); track model) {
+            <option>{{ model }}</option>
+            }
+         </select>
+      </div>
+   @if (vehicles().length) {
+   <table>
+      <thead>
+         <tr>
+            <th>Name</th>
+            <th>Model</th>
+            <th>Cost (in credits)</th>
+         </tr>
+      </thead>
+
+      <tbody>
+         @for (vehicle of vehicles(); track vehicle) {
+         <tr>
+            <td>
+               {{ vehicle.name }}
+            </td>
+            <td>
+               {{ vehicle.model }}
+            </td>
+            <td>
+               {{ vehicle.cost_in_credits }}
+            </td>
+         </tr>
+         }
+      </tbody>
+   </table>
+   } @else {
+   <div>No vehicles found</div>
+   }
+
+   }
+</div>
